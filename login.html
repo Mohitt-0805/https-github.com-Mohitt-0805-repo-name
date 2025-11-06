@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PQMP Login</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body class="login-body">
+  <div class="login-container">
+    <h1>Parliament Question Management Portal</h1>
+    <div class="login-card">
+      <h2>Login</h2>
+      <form action="db.html" method="post" id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter username" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required />
+
+        <label for="role">Login As</label>
+        <select id="role" required>
+          <option value="">Select Role</option>
+          <option value="MP">Member of Parliament (MP)</option>
+          <option value="Admin">Department Officer / Admin</option>
+        </select>
+
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </div>
+  </div>
+  <script src="login.js"></script>
+  
+</body>
+</html>

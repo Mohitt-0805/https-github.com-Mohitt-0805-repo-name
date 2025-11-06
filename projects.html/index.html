@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoRD Schemes Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f4f7fc;
+      color: #333;
+    }
+
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+    }
+
+    header input[type="text"] {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      width: 250px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 1rem 2rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 1.2rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      color: #003366;
+    }
+
+    .section {
+      padding: 2rem;
+    }
+
+    .section h2 {
+      margin-bottom: 1rem;
+      color: #003366;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #003366;
+      color: white;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #003366;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MoRD Central Dashboard</h1>
+    <input type="text" placeholder="Search scheme, state..." />
+  </header>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Total Schemes Active</h3>
+      <p>35</p>
+    </div>
+    <div class="card">
+      <h3>Beneficiaries Reached</h3>
+      <p>1.2 Cr</p>
+    </div>
+    <div class="card">
+      <h3>Funds Disbursed</h3>
+      <p>₹ 85,000 Cr</p>
+    </div>
+    <div class="card">
+      <h3>Grievances Reported</h3>
+      <p>1,250</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Major Schemes Overview</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Scheme</th>
+          <th>Coverage</th>
+          <th>Budget</th>
+          <th>Progress</th>
+          <th>Last Updated</th>
+        </tr>
+      </thead>
+      <tbody id="schemeTable">
+        <tr>
+          <td>PMAY-G</td>
+          <td>3.5 Cr</td>
+          <td>₹ 60,000 Cr</td>
+          <td>60%</td>
+          <td>26 Jul 2025</td>
+        </tr>
+        <tr>
+          <td>MGNREGA</td>
+          <td>12 Cr</td>
+          <td>₹ 1.2 L Cr</td>
+          <td>90%</td>
+          <td>28 Jul 2025</td>
+        </tr>
+        <tr>
+          <td>NRLM</td>
+          <td>7.2 Cr</td>
+          <td>₹ 30,000 Cr</td>
+          <td>70%</td>
+          <td>25 Jul 2025</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 Ministry of Rural Development, Government of India
+  </div>
+
+  <script>
+    // Future enhancement: Fetch data dynamically
+    // Example function:
+    // fetchSchemes();
+  </script>
+</body>
+</html>

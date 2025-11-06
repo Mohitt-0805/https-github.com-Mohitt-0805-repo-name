@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PQMP — Parliament Question Management Portal</title>
+  <meta name="description" content="Parliament Question Management Portal (PQMP) — Home" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- AOS for scroll animations -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Main stylesheet (created next) -->
+  <link rel="stylesheet" href="ITR.css">
+
+  <style>
+    /* Minimal inline fallback so the page behaves nicely before CSS file is added */
+    :root{font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+    html{scroll-behavior:smooth}
+    body{margin:0}
+    a{color:inherit;text-decoration:none}
+  </style>
+</head>
+<body>
+  <!-- ========== Header / Navbar ========== -->
+  <header class="site-header" id="top">
+    <nav class="nav container">
+      <a class="brand" href="index.html">PQMP</a>
+      <button class="nav-toggle" id="navToggle">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn btn-primary" href="dashboard.html">Try Demo</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========== Hero ========== -->
+  <section class="hero" id="hero">
+    <div class="container hero-inner">
+      <div class="hero-content" data-aos="fade-up">
+        <h1>Parliament Question Management Portal</h1>
+        <p class="lead">A clean, modern platform for Members of Parliament to submit, track, and manage parliamentary questions — streamlined for transparency and accountability.</p>
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="#features">Explore Features</a>
+          <a class="btn btn-ghost" href="dashboard.html">Open Demo Dashboard</a>
+        </div>
+      </div>
+      <div class="hero-visual" data-aos="fade-left">
+        <!-- Placeholder illustration (replace with asset) -->
+        <img src="assets/img/hero-bg.svg" alt="PQMP Illustration" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== About ========== -->
+  <section class="section" id="about">
+    <div class="container" data-aos="fade-up">
+      <div class="grid-2">
+        <div>
+          <h2>Why PQMP?</h2>
+          <p class="muted">In parliamentary democracy, questions are a key mechanism for oversight. PQMP digitizes the lifecycle of questions — submission by MPs, categorization, approval by administrators, and official responses by ministries — making the process faster and trackable.</p>
+          <ul class="checklist">
+            <li>Role-based submission & approval</li>
+            <li>Starred, Unstarred & Short-notice question types</li>
+            <li>Keyword search, filters and analytics</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card stats-card" data-aos="zoom-in">
+            <div class="stat">
+              <h3 id="statTotal">0</h3>
+              <div class="muted">Total Questions</div>
+            </div>
+            <div class="stat">
+              <h3 id="statAnswered">0</h3>
+              <div class="muted">Answered</div>
+            </div>
+            <div class="stat">
+              <h3 id="statPending">0</h3>
+              <div class="muted">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Features Preview ========== -->
+  <section class="section" id="features">
+    <div class="container">
+      <h2 data-aos="fade-up">Key Features</h2>
+      <p class="muted" data-aos="fade-up" data-aos-delay="80">Everything you need to manage parliamentary questions at scale.</p>
+
+      <div class="cards" data-aos="fade-up" data-aos-delay="160">
+        <article class="card feature-card">
+          <div class="icon">👤</div>
+          <h4>User Management</h4>
+          <p class="muted">Role-based access for MPs, Ministry officials and Admins. Profile, authentication and permissions.</p>
+        </article>
+
+        <article class="card feature-card">
+          <div class="icon">❓</div>
+          <h4>Question Management</h4>
+          <p class="muted">Submit, edit, and track Starred / Unstarred / Short Notice questions with keywords and categories.</p>
+        </article>
+
+        <article class="card feature-card">
+          <div class="icon">🏛️</div>
+          <h4>Ministry Dashboard</h4>
+          <p class="muted">Ministries can view assigned questions, upload official answers, and attach documents.</p>
+        </article>
+
+        <article class="card feature-card">
+          <div class="icon">🔎</div>
+          <h4>Search & Filters</h4>
+          <p class="muted">Powerful search by MP, ministry, keyword, type, session, and status.</p>
+        </article>
+
+        <article class="card feature-card">
+          <div class="icon">📊</div>
+          <h4>Analytics & Reports</h4>
+          <p class="muted">Visual charts, answered vs unanswered stats and exportable reports.</p>
+        </article>
+
+        <article class="card feature-card">
+          <div class="icon">🔐</div>
+          <h4>Admin Controls</h4>
+          <p class="muted">Approve/reject questions, manage users and generate detailed reports.</p>
+        </article>
+      </div>
+
+      <div class="center mt-3">
+        <a class="btn btn-outline" href="features.html">See full feature list</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA Banner ========== -->
+  <section class="cta-banner" data-aos="fade-up">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <h3>Ready to try the demo dashboard?</h3>
+          <p class="muted">Switch roles (MP / Ministry / Admin) and try the flows in the interactive dashboard.</p>
+        </div>
+        <div>
+          <a class="btn btn-accent" href="dashboard.html">Open Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="col">
+        <strong>PQMP</strong>
+        <div class="muted">Parliament Question Management Portal — College project prototype</div>
+      </div>
+      <div class="col">
+        <div class="muted">Mohit Sharma · SKIT, Jaipur</div>
+        <div class="muted">github.com/your-repo · linkedin.com/in/your-link</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="ITR .js"></script>
+  <script>
+    // init AOS
+    AOS.init({ once: true, duration: 700 });
+
+    // simple nav toggle for small screens (will be enhanced in script.js)
+    document.getElementById('navToggle').addEventListener('click', ()=>{
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // lightweight stat animation fallback (script.js will replace with real values)
+    function animateStats(){
+      const total = 42, answered=18, pending=24;
+      document.getElementById('statTotal').innerText = total;
+      document.getElementById('statAnswered').innerText = answered;
+      document.getElementById('statPending').innerText = pending;
+    }
+    animateStats();
+  </script>
+
+  <!-- Main interactive behaviours (created next) -->
+  <script src="ITR .js"></script>
+</body>
+</html>

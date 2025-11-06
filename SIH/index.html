@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parliament Question Management Portal</title>
+    <style>
+        :root {
+            --primary-color: #1a4b8c;
+            --secondary-color: #f0f4f8;
+            --accent-color: #e63946;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #ddd;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        nav {
+            background-color: white;
+            padding: 0 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        nav li.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        nav li:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .question-form {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .keyword {
+            background-color: var(--secondary-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .keyword .remove {
+            cursor: pointer;
+            color: var(--accent-color);
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--border-color);
+            border-radius: 4px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0d3a73;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e1e8f0;
+        }
+        
+        .questions-list {
+            margin-top: 2rem;
+        }
+        
+        .question-item {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .question-id {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .question-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .question-department {
+            background-color: var(--secondary-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .question-text {
+            margin-bottom: 1rem;
+        }
+        
+        .question-status {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: var(--warning-color);
+            color: #856404;
+        }
+        
+        .status-approved {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .status-rejected {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .sidebar-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .recent-activity {
+            list-style: none;
+        }
+        
+        .recent-activity li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .recent-activity li:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .active-tab {
+            display: block;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div style="font-size: 2rem;">🏛️</div>
+            <h1>Parliament Question Management Portal</h1>
+        </div>
+        <div class="user-info">
+            <span>Welcome, MP John Smith</span>
+            <div class="user-avatar">JS</div>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li class="active" data-tab="dashboard">Dashboard</li>
+            <li data-tab="submit-question">Submit Question</li>
+            <li data-tab="my-questions">My Questions</li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <div id="dashboard" class="active-tab">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Questions Submitted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Pending Approval</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Approved Questions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Rejected Questions</div>
+                </div>
+            </div>
+            
+            <div class="dashboard">
+                <div>
+                    <div class="card">
+                        <h2>Recent Questions</h2>
+                        <div class="questions-list">
+                            <div class="question-item">
+                                <div class="question-header">
+                                    <div class="question-id">PQ-2023-0456</div>
+                                    <div class="question-date">Submitted: 15 Nov 2023</div>
+                                </div>
+                                <div class="question-department">Ministry of Health</div>
+                                <div class="question-text">
+                                    What measures is the Ministry taking to address the shortage of medical professionals in rural areas?
+                                </div>
+                                <div class="question-status status-approved">Approved</div>
+                            </div>
+                            
+                            <div class="question-item">
+                                <div class="question-header">
+                                    <div class="question-id">PQ-2023-0455</div>
+                                    <div class="question-date">Submitted: 14 Nov 2023</div>
+                                </div>
+                                <div class="question-department">Ministry of Education</div>
+                                <div class="question-text">
+                                    What is the government's plan to improve digital literacy in primary schools?
+                                </div>
+                                <div class="question-status status-pending">Pending</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="sidebar-card">
+                        <h2>Recent Activity</h2>
+                        <ul class="recent-activity">
+                            <li>
+                                <div>Question PQ-2023-0456 approved</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </li>
+                            <li>
+                                <div>Question PQ-2023-0455 submitted</div>
+                                <div class="activity-time">1 day ago</div>
+                            </li>
+                            <li>
+                                <div>Question PQ-2023-0443 rejected</div>
+                                <div class="activity-time">3 days ago</div>
+                            </li>
+                            <li>
+                                <div>Question PQ-2023-0432 approved</div>
+                                <div class="activity-time">5 days ago</div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-card">
+                        <h2>Quick Actions</h2>
+                        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="switchTab('submit-question')">
+                            Submit New Question
+                        </button>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="switchTab('my-questions')">
+                            View My Questions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="submit-question" class="question-form">
+            <div class="card">
+                <h2>Submit a New Parliamentary Question</h2>
+                <form id="questionForm">
+                    <div class="form-group">
+                        <label for="questionText">Question Text</label>
+                        <textarea id="questionText" class="form-control" placeholder="Enter your question here..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="keywords">Keywords</label>
+                        <input type="text" id="keywords" class="form-control" placeholder="Add keywords separated by commas">
+                        <div class="keywords-container" id="keywordsContainer"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="department">Concerned Department</label>
+                        <select id="department" class="form-control" required>
+                            <option value="">Select a department</option>
+                            <option value="health">Ministry of Health</option>
+                            <option value="education">Ministry of Education</option>
+                            <option value="finance">Ministry of Finance</option>
+                            <option value="defense">Ministry of Defense</option>
+                            <option value="transport">Ministry of Transport</option>
+                            <option value="environment">Ministry of Environment</option>
+                            <option value="justice">Ministry of Justice</option>
+                            <option value="agriculture">Ministry of Agriculture</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Upload Supporting Documents (Optional)</label>
+                        <div class="file-upload" id="fileUploadArea">
+                            <div>📁</div>
+                            <p>Click to upload files or drag and drop</p>
+                            <p style="font-size: 0.9rem; color: var(--light-text);">Maximum file size: 10MB</p>
+                            <input type="file" id="fileInput" style="display: none;" multiple>
+                        </div>
+                        <div id="fileList"></div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn btn-primary">Submit Question</button>
+                        <button type="button" class="btn btn-secondary" onclick="switchTab('dashboard')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="my-questions" class="question-form">
+            <div class="card">
+                <h2>My Submitted Questions</h2>
+                <div class="questions-list" id="myQuestionsList">
+                    <!-- Questions will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Parliament Question Management Portal &copy; 2023. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.active-tab').forEach(tab => {
+                tab.classList.remove('active-tab');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active-tab');
+            
+            // Update navigation
+            document.querySelectorAll('nav li').forEach(li => {
+                li.classList.remove('active');
+                if (li.getAttribute('data-tab') === tabName) {
+                    li.classList.add('active');
+                }
+            });
+            
+            // If switching to my questions, load them
+            if (tabName === 'my-questions') {
+                loadMyQuestions();
+            }
+        }
+        
+        // Set up navigation click events
+        document.querySelectorAll('nav li').forEach(li => {
+            li.addEventListener('click', function() {
+                switchTab(this.getAttribute('data-tab'));
+            });
+        });
+        
+        // Keywords functionality
+        const keywordsInput = document.getElementById('keywords');
+        const keywordsContainer = document.getElementById('keywordsContainer');
+        let keywords = [];
+        
+        keywordsInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ',') {
+                e.preventDefault();
+                const keyword = this.value.trim();
+                if (keyword && !keywords.includes(keyword)) {
+                    keywords.push(keyword);
+                    renderKeywords();
+                    this.value = '';
+                }
+            }
+        });
+        
+        function renderKeywords() {
+            keywordsContainer.innerHTML = '';
+            keywords.forEach((keyword, index) => {
+                const keywordElement = document.createElement('div');
+                keywordElement.className = 'keyword';
+                keywordElement.innerHTML = `
+                    ${keyword}
+                    <span class="remove" onclick="removeKeyword(${index})">×</span>
+                `;
+                keywordsContainer.appendChild(keywordElement);
+            });
+        }
+        
+        function removeKeyword(index) {
+            keywords.splice(index, 1);
+            renderKeywords();
+        }
+        
+        // File upload functionality
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        let uploadedFiles = [];
+        
+        fileUploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+        
+        fileUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'var(--primary-color)';
+            this.style.backgroundColor = 'var(--secondary-color)';
+        });
+        
+        fileUploadArea.addEventListener('dragleave', function() {
+            this.style.borderColor = 'var(--border-color)';
+            this.style.backgroundColor = 'transparent';
+        });
+        
+        fileUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'var(--border-color)';
+            this.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length > 0) {
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+        
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                handleFiles(this.files);
+            }
+        });
+        
+        function handleFiles(files) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Check file size (10MB limit)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert(`File "${file.name}" is too large. Maximum size is 10MB.`);
+                    continue;
+                }
+                
+                uploadedFiles.push(file);
+            }
+            
+            renderFileList();
+        }
+        
+        function renderFileList() {
+            fileList.innerHTML = '';
+            
+            if (uploadedFiles.length === 0) {
+                return;
+            }
+            
+            const list = document.createElement('ul');
+            list.style.listStyle = 'none';
+            list.style.marginTop = '1rem';
+            
+            uploadedFiles.forEach((file, index) => {
+                const listItem = document.createElement('li');
+                listItem.style.display = 'flex';
+                listItem.style.justifyContent = 'space-between';
+                listItem.style.alignItems = 'center';
+                listItem.style.padding = '0.5rem';
+                listItem.style.borderBottom = '1px solid var(--border-color)';
+                
+                listItem.innerHTML = `
+                    <div>
+                        <span>📄</span>
+                        <span style="margin-left: 0.5rem;">${file.name}</span>
+                        <span style="margin-left: 0.5rem; color: var(--light-text); font-size: 0.9rem;">
+                            (${formatFileSize(file.size)})
+                        </span>
+                    </div>
+                    <button type="button" class="btn btn-secondary" style="padding: 0.3rem 0.7rem;" onclick="removeFile(${index})">
+                        Remove
+                    </button>
+                `;
+                
+                list.appendChild(listItem);
+            });
+            
+            fileList.appendChild(list);
+        }
+        
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            renderFileList();
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            else return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+        
+        // Form submission
+        document.getElementById('questionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const questionText = document.getElementById('questionText').value;
+            const department = document.getElementById('department').value;
+            
+            if (!questionText || !department) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // In a real application, you would send this data to a server
+            // For this demo, we'll just show a success message and reset the form
+            
+            // Generate a random question ID
+            const questionId = 'PQ-2023-' + Math.floor(1000 + Math.random() * 9000);
+            
+            // Store the question in localStorage (for demo purposes)
+            const questions = JSON.parse(localStorage.getItem('parliamentQuestions')) || [];
+            const newQuestion = {
+                id: questionId,
+                text: questionText,
+                keywords: keywords,
+                department: document.getElementById('department').options[document.getElementById('department').selectedIndex].text,
+                files: uploadedFiles.map(f => f.name),
+                date: new Date().toLocaleDateString(),
+                status: 'pending'
+            };
+            
+            questions.push(newQuestion);
+            localStorage.setItem('parliamentQuestions', JSON.stringify(questions));
+            
+            alert(`Question submitted successfully! Your question ID is: ${questionId}`);
+            
+            // Reset form
+            this.reset();
+            keywords = [];
+            renderKeywords();
+            uploadedFiles = [];
+            renderFileList();
+            
+            // Switch to dashboard
+            switchTab('dashboard');
+        });
+        
+        // Load and display user's questions
+        function loadMyQuestions() {
+            const questionsList = document.getElementById('myQuestionsList');
+            const questions = JSON.parse(localStorage.getItem('parliamentQuestions')) || [];
+            
+            if (questions.length === 0) {
+                questionsList.innerHTML = '<p>You haven\'t submitted any questions yet.</p>';
+                return;
+            }
+            
+            questionsList.innerHTML = '';
+            
+            // Sort questions by date (newest first)
+            questions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            questions.forEach(question => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-item';
+                
+                let statusClass = 'status-pending';
+                if (question.status === 'approved') statusClass = 'status-approved';
+                if (question.status === 'rejected') statusClass = 'status-rejected';
+                
+                questionElement.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-id">${question.id}</div>
+                        <div class="question-date">Submitted: ${question.date}</div>
+                    </div>
+                    <div class="question-department">${question.department}</div>
+                    <div class="question-text">${question.text}</div>
+                    <div class="keywords-container">
+                        ${question.keywords.map(keyword => `<div class="keyword">${keyword}</div>`).join('')}
+                    </div>
+                    ${question.files.length > 0 ? `
+                        <div style="margin-top: 1rem;">
+                            <strong>Attached files:</strong>
+                            <ul style="margin-left: 1.5rem;">
+                                ${question.files.map(file => `<li>${file}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    <div class="question-status ${statusClass}" style="margin-top: 1rem;">${question.status.charAt(0).toUpperCase() + question.status.slice(1)}</div>
+                `;
+                
+                questionsList.appendChild(questionElement);
+            });
+        }
+        
+        // Initialize with some sample data if none exists
+        window.addEventListener('load', function() {
+            if (!localStorage.getItem('parliamentQuestions')) {
+                const sampleQuestions = [
+                    {
+                        id: 'PQ-2023-0456',
+                        text: 'What measures is the Ministry taking to address the shortage of medical professionals in rural areas?',
+                        keywords: ['healthcare', 'rural', 'medical professionals'],
+                        department: 'Ministry of Health',
+                        files: ['rural_health_report.pdf'],
+                        date: '15 Nov 2023',
+                        status: 'approved'
+                    },
+                    {
+                        id: 'PQ-2023-0455',
+                        text: 'What is the government\'s plan to improve digital literacy in primary schools?',
+                        keywords: ['education', 'digital literacy', 'primary schools'],
+                        department: 'Ministry of Education',
+                        files: [],
+                        date: '14 Nov 2023',
+                        status: 'pending'
+                    }
+                ];
+                
+                localStorage.setItem('parliamentQuestions', JSON.stringify(sampleQuestions));
+            }
+        });
+    </script>
+</body>
+</html>

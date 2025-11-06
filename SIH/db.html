@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PQMP Interactive Dashboard</title>
+  <link rel="stylesheet" href="db.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar" id="sidebar">
+      <h2>PQMP</h2>
+      <nav>
+        <ul>
+          <li class="active" onclick="showSection('overview', event)">📊 Dashboard</li>
+          <li onclick="showSection('uploadSection', event)">✍️ Upload</li>
+          <li onclick="showSection('membersSection', event)">👥 Members</li>
+          <li onclick="showSection('aboutSection', event)">ℹ️ About</li>
+          <li onclick="logout()">🚪 Logout</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="nav-left">
+          <button id="sidebarToggle" class="icon-btn">☰</button>
+          <h1>PQMP Portal</h1>
+        </div>
+        <div class="top-right">
+          <input type="text" id="searchInput" placeholder="Search questions..." />
+          <button id="darkModeToggle" class="icon-btn" title="Toggle Dark Mode">🌙</button>
+          <span id="welcomeUser"></span>
+        </div>
+      </header>
+
+      <!-- Overview -->
+      <section id="overview" class="content-section active">
+        <div class="card stats-card">
+          <h2>Dashboard Overview</h2>
+          <div class="stats-grid">
+            <div class="stat-box green">
+              <h3 id="totalQ">0</h3><p>Total</p>
+              <div class="progress-bar"><div id="totalProgress"></div></div>
+            </div>
+            <div class="stat-box gold">
+              <h3 id="pendingQ">0</h3><p>Pending</p>
+              <div class="progress-bar"><div id="pendingProgress"></div></div>
+            </div>
+            <div class="stat-box green">
+              <h3 id="reviewQ">0</h3><p>Under Review</p>
+              <div class="progress-bar"><div id="reviewProgress"></div></div>
+            </div>
+            <div class="stat-box gold">
+              <h3 id="answeredQ">0</h3><p>Answered</p>
+              <div class="progress-bar"><div id="answeredProgress"></div></div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="statusChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Question Tracker</h2>
+          <table class="data-table" id="questionTable">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Keywords</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Upload Section -->
+      <section id="uploadSection" class="content-section">
+        <div class="card upload-card">
+          <h2>Upload Question</h2>
+          <form id="questionForm">
+            <input type="text" id="qTitle" placeholder="Enter question title" required />
+            <input type="text" id="qKeywords" placeholder="Keywords (comma separated)" />
+            <select id="qDept" required>
+              <option value="">Select Department</option>
+              <option>Finance</option>
+              <option>Education</option>
+              <option>Health</option>
+              <option>Defence</option>
+            </select>
+            <input type="file" id="qFile" />
+            <div id="filePreview"></div>
+            <button type="submit" class="btn">Submit Question</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Members -->
+      <section id="membersSection" class="content-section">
+        <div class="card">
+          <h2>List of Members</h2>
+          <ul class="members-list">
+            <li>MP1 - Shri Rajesh Kumar</li>
+            <li>MP2 - Smt. Anjali Sharma</li>
+            <li>MP3 - Shri Arjun Mehta</li>
+            <li>MP4 - Smt. Priya Singh</li>
+            <li>MP5 - Shri Vikram Rao</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="aboutSection" class="content-section">
+        <div class="card">
+          <h2>About PQMP</h2>
+          <p>
+            PQMP is a centralized platform allowing MPs to upload, track, and manage questions.
+            Departments can respond efficiently, and admins can generate reports and ensure transparency.
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="db.js"></script>
+</body>
+</html>
